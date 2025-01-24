@@ -10,6 +10,12 @@ public class Faculty {
     public Faculty() {
     }
 
+    public Faculty(String name, String color) {
+        this.id = -1;
+        this.name = name;
+        this.color = color;
+    }
+
     public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
@@ -45,6 +51,7 @@ public class Faculty {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
+                        id == ((Faculty) object).id &&
                         Objects.equals(name, ((Faculty) object).name) &&
                         Objects.equals(color, ((Faculty) object).color));
     }

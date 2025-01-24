@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class FacultyService {
 
     private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    private static long count = 0;
+    private static long count = 1;
 
     public Faculty addFaculty(Faculty faculty) {
         faculty.setId(count++);
