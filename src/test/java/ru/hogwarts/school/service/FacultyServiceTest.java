@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.hogwarts.school.model.Faculty;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.hogwarts.school.constant.TestConstants.*;
 
 @SpringBootTest
@@ -36,10 +39,10 @@ public class FacultyServiceTest {
     @Order(3)
     public void should_editFaculty_succeed() {
         out.addFaculty(FACULTY_1);
-        final Faculty facultyEdited = out.editFaculty(new Faculty(FACULTY_1.getId(),
+        final Faculty facultyActual = out.editFaculty(new Faculty(FACULTY_1.getId(),
                 FACULTY_2.getName(),
                 FACULTY_2.getColor()));
-        assertEquals(out.findFaculty(FACULTY_1.getId()), facultyEdited);
+        assertEquals(out.findFaculty(FACULTY_1.getId()), facultyActual);
     }
 
     @Test
@@ -60,5 +63,21 @@ public class FacultyServiceTest {
     public void should_deleteFaculty_not_found() {
         out.deleteFaculty(FACULTY_1.getId());
         assertNull(out.findFaculty(FACULTY_1.getId()));
+    }
+
+    @Test
+    @Order(2)
+    public void should_findByColor_succeed() {
+        out.addFaculty(FACULTY_1);
+        out.addFaculty(FACULTY_11);
+        out.addFaculty(FACULTY_2);
+        assertEquals(List.of(FACULTY_11, FACULTY_2), out.findByColor(COLOR_1));
+    }
+
+    @Test
+    @Order(2)
+    public void should_findByColor_not_found() {
+        out.addFaculty(FACULTY_1);
+        assertEquals(Collections.emptyList(), out.findByColor(COLOR_1));
     }
 }
