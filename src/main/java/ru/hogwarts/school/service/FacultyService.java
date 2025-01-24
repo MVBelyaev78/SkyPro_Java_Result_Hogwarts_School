@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -34,6 +34,11 @@ public class FacultyService {
         faculties.remove(id);
     }
 
-    // findByColor: реализовать через лямбда-выражения и Stream API, см. переписку с Германом ИИ в разделе 4
-    // "Домашнее задание. Чеклист"
+    public Collection<Faculty> findByColor(String color) {
+        return faculties
+                .values()
+                .stream()
+                .filter(faculty -> Objects.equals(faculty.getColor(), color))
+                .collect(Collectors.toList());
+    }
 }

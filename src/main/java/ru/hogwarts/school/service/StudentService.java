@@ -3,7 +3,10 @@ package ru.hogwarts.school.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -33,6 +36,11 @@ public class StudentService {
         students.remove(id);
     }
 
-    // findByAge: реализовать через лямбда-выражения и Stream API, см. переписку с Германом ИИ в разделе 4
-    // "Домашнее задание. Чеклист"
+    public Collection<Student> findByAge(Integer age) {
+        return students
+                .values()
+                .stream()
+                .filter(student -> Objects.equals(student.getAge(), age))
+                .collect(Collectors.toList());
+    }
 }
