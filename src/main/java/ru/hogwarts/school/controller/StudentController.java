@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -43,5 +46,10 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Integer age) {
+        return ResponseEntity.ok(age > 0 ? studentService.findByAge(age) : Collections.emptyList());
     }
 }
