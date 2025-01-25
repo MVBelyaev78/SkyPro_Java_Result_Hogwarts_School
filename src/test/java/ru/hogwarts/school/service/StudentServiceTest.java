@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collections;
