@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.hogwarts.school.model.Faculty;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
