@@ -23,6 +23,15 @@ public class FacultyServiceTest {
 
     @Test
     @Order(2)
+    public void should_addFaculty_id_correct() {
+        final Faculty faculty1 = out.addFaculty(FACULTY_1);
+        final Faculty faculty2 = out.addFaculty(FACULTY_2);
+        assertTrue(faculty1.getId() > 0);
+        assertTrue(faculty2.getId() > faculty1.getId());
+    }
+
+    @Test
+    @Order(2)
     public void should_findFaculty_succeed() {
         out.addFaculty(FACULTY_1);
         assertEquals(FACULTY_1, out.findFaculty(FACULTY_1.getId()));

@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.hogwarts.school.constant.TestConstants.*;
+import static ru.hogwarts.school.constant.TestConstants.STUDENT_2;
 
 public class StudentServiceTest {
     private final StudentService out = new StudentService();
@@ -17,6 +19,15 @@ public class StudentServiceTest {
     @Order(1)
     public void should_addStudent_succeed() {
         assertEquals(STUDENT_1, out.addStudent(STUDENT_1));
+    }
+
+    @Test
+    @Order(2)
+    public void should_addStudent_id_correct() {
+        final Student student1 = out.addStudent(STUDENT_1);
+        final Student student2 = out.addStudent(STUDENT_2);
+        assertTrue(student1.getId() > 0);
+        assertTrue(student2.getId() > student1.getId());
     }
 
     @Test
