@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final HashMap<Long, Student> students = new HashMap<>();
-    private long count = 0;
+    private long count = 1;
 
     public Student addStudent(Student student) {
         student.setId(count++);
