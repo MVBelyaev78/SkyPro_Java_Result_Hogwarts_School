@@ -10,6 +10,12 @@ public class Student {
     public Student() {
     }
 
+    public Student(String name, Integer age) {
+        this.id = -1;
+        this.name = name;
+        this.age = age;
+    }
+
     public Student(long id, String name, Integer age) {
         this.id = id;
         this.name = name;
