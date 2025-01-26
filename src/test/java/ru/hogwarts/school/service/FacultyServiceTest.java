@@ -13,7 +13,7 @@ import static ru.hogwarts.school.constant.TestConstants.*;
 
 @SpringBootTest
 public class FacultyServiceTest {
-    private final FacultyService out = new FacultyService();
+    private final FacultyService out = new FacultyServiceImpl();
 
     @Test
     @Order(1)

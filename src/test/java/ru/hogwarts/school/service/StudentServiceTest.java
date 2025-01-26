@@ -14,7 +14,7 @@ import static ru.hogwarts.school.constant.TestConstants.STUDENT_2;
 
 @SpringBootTest
 public class StudentServiceTest {
-    private final StudentService out = new StudentService();
+    private final StudentService out = new StudentServiceImpl();
 
     @Test
     @Order(1)
