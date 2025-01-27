@@ -1,9 +1,17 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
+@Entity
 public class Student {
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private Integer age;
 
@@ -11,18 +19,18 @@ public class Student {
     }
 
     public Student(String name, Integer age) {
-        this.id = -1;
+        this.id = -1L;
         this.name = name;
         this.age = age;
     }
 
-    public Student(long id, String name, Integer age) {
+    public Student(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,8 +59,8 @@ public class Student {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
-                        id == ((Student) object).id &&
-                        age == ((Student) object).age &&
+                        Objects.equals(id, ((Student) object).id) &&
+                        Objects.equals(age, ((Student) object).age) &&
                         Objects.equals(name, ((Student) object).name));
     }
 
