@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class FacultyServiceImpl implements FacultyService {
 
     private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    private static long count = 1;
+    private static Long count = 1L;
 
     public Faculty addFaculty(Faculty faculty) {
         faculty.setId(count++);
@@ -18,7 +18,7 @@ public class FacultyServiceImpl implements FacultyService {
         return faculty;
     }
 
-    public Faculty findFaculty(long id) {
+    public Faculty findFaculty(Long id) {
         return faculties.get(id);
     }
 
@@ -30,7 +30,7 @@ public class FacultyServiceImpl implements FacultyService {
         return faculty;
     }
 
-    public void deleteFaculty(long id) {
+    public void deleteFaculty(Long id) {
         faculties.remove(id);
     }
 

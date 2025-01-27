@@ -7,11 +7,11 @@ import java.util.Collection;
 public interface FacultyService {
     Faculty addFaculty(Faculty faculty);
 
-    Faculty findFaculty(long id);
+    Faculty findFaculty(Long id);
 
     Faculty editFaculty(Faculty faculty);
 
-    void deleteFaculty(long id);
+    void deleteFaculty(Long id);
 
     Collection<Faculty> findByColor(String color);
 }

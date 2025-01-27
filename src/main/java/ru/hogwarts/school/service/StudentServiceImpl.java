@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private final HashMap<Long, Student> students = new HashMap<>();
-    private long count = 1;
+    private Long count = 1L;
 
     public Student addStudent(Student student) {
         student.setId(count++);
@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    public Student findStudent(long id) {
+    public Student findStudent(Long id) {
         return students.get(id);
     }
 
@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    public void deleteStudent(long id) {
+    public void deleteStudent(Long id) {
         students.remove(id);
     }
 
