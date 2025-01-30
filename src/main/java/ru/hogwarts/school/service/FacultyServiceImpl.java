@@ -22,7 +22,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Faculty findFaculty(Long id) {
-        return facultyRepository.getReferenceById(id);
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(Faculty faculty) {

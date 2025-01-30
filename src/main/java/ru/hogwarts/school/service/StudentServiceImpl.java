@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student findStudent(Long id) {
-        return studentRepository.getReferenceById(id);
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Student editStudent(Student student) {
