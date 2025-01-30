@@ -20,6 +20,12 @@ public class Faculty {
     public Faculty() {
     }
 
+    public Faculty(String name, String color) {
+        this.id = null;
+        this.name = name;
+        this.color = color;
+    }
+
     public Long getId() {
         return id;
     }

@@ -20,6 +20,12 @@ public class Student {
     public Student() {
     }
 
+    public Student(String name, Integer age) {
+        this.id = null;
+        this.name = name;
+        this.age = age;
+    }
+
     public Long getId() {
         return id;
     }
