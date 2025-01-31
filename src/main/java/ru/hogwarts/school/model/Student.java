@@ -21,9 +21,13 @@ public class Student {
     }
 
     public Student(String name, Integer age) {
-        this.id = null;
         this.name = name;
         this.age = age;
+    }
+
+    public Student(Long id, String name, Integer age) {
+        super();
+        this.id = id;
     }
 
     public Long getId() {
