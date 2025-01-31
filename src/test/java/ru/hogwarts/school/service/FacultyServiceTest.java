@@ -33,6 +33,7 @@ public class FacultyServiceTest {
         verify(facultyRepositoryMock, times(1)).save(FACULTY_SOURCE_1);
     }
 
+//    В одиночку проходит; в совокупности с остальными - fail
 //    @Test
 //    @Order(1)
 //    public void should_findFaculty_succeed() {
@@ -56,6 +57,7 @@ public class FacultyServiceTest {
         verify(facultyRepositoryMock, times(1)).save(FACULTY_TARGET_1);
     }
 
+//    Как мокировать метод facultyRepository.deleteById, если его тип - void?
 //    @Test
 //    @Order(2)
 //    public void should_deleteFaculty_succeed() {
