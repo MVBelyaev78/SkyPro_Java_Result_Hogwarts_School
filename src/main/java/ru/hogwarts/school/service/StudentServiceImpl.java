@@ -43,4 +43,8 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> findByAge(Integer age) {
         return studentRepository.findByAge(age);
     }
+
+    public Collection<Student> findByAgeBetween(Integer startAge, Integer endAge) {
+        return studentRepository.findByAgeBetween(startAge, endAge);
+    }
 }

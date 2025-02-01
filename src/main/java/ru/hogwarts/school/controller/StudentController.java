@@ -65,4 +65,14 @@ public class StudentController {
         }
         return ResponseEntity.ok(students);
     }
+
+    @GetMapping(params = {"age1", "age2"})
+    public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam(name = "age1") Integer age1,
+                                                                @RequestParam(name = "age2") Integer age2) {
+        Collection<Student> students = studentService.findByAgeBetween(age1, age2);
+        if (students == null || students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
 }

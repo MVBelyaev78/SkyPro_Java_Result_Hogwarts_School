@@ -93,4 +93,20 @@ public class StudentServiceTest {
         assertEquals(List.of(), out.findByAge(13));
         verify(studentRepositoryMock, times(1)).findByAge(13);
     }
+
+    @Test
+    public void should_findByAgeBetween_succeed() {
+        final Student student1 = new Student(1L, "Stewart Ackerley", 13);
+        final Student student2 = new Student(2L, "Roger Davies", 11);
+        when(studentRepositoryMock.findByAgeBetween(10, 14)).thenReturn(List.of(student1, student2));
+        assertEquals(List.of(student1, student2), out.findByAgeBetween(10, 14));
+        verify(studentRepositoryMock, times(1)).findByAgeBetween(10, 14);
+    }
+
+    @Test
+    public void should_findByAgeBetween_not_found() {
+        when(studentRepositoryMock.findByAgeBetween(12, 17)).thenReturn(List.of());
+        assertEquals(List.of(), out.findByAgeBetween(12, 17));
+        verify(studentRepositoryMock, times(1)).findByAgeBetween(12, 17);
+    }
 }
