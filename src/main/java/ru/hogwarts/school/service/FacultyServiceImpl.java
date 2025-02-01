@@ -16,6 +16,10 @@ public class FacultyServiceImpl implements FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
+    public List<Faculty> findAll() {
+        return facultyRepository.findAll();
+    }
+
     public Faculty addFaculty(Faculty faculty) {
         faculty.setId(null);
         return facultyRepository.save(faculty);

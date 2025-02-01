@@ -24,6 +24,22 @@ public class FacultyServiceTest {
     private FacultyServiceImpl out;
 
     @Test
+    public void should_findAll_succeed() {
+        final Faculty faculty1 = new Faculty(1L,"Gryffindor", "red");
+        final Faculty faculty2 = new Faculty(2L,"Hufflepuff", "yellow");
+        when(facultyRepositoryMock.findAll()).thenReturn(List.of(faculty1, faculty2));
+        assertEquals(List.of(faculty1, faculty2), out.findAll());
+        verify(facultyRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    public void should_findAll_not_found() {
+        when(facultyRepositoryMock.findAll()).thenReturn(List.of());
+        assertEquals(List.of(), out.findAll());
+        verify(facultyRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
     public void should_addFaculty_succeed() {
         final Faculty facultySource = new Faculty("Gryffindor", "red");
         final Faculty facultyTarget = new Faculty(1L,"Gryffindor", "red");
@@ -60,5 +76,21 @@ public class FacultyServiceTest {
     public void should_deleteFaculty_succeed() {
         out.deleteFaculty(1L);
         verify(facultyRepositoryMock, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void should_findByColor_succeed() {
+        final Faculty faculty1 = new Faculty(1L,"Hufflepuff", "yellow");
+        final Faculty faculty2 = new Faculty(2L,"Ravenclaw", "yellow");
+        when(facultyRepositoryMock.findByColor("yellow")).thenReturn(List.of(faculty1, faculty2));
+        assertEquals(List.of(faculty1, faculty2), out.findByColor("yellow"));
+        verify(facultyRepositoryMock, times(1)).findByColor("yellow");
+    }
+
+    @Test
+    public void should_findByColor_not_found() {
+        when(facultyRepositoryMock.findByColor("red")).thenReturn(List.of());
+        assertEquals(List.of(), out.findByColor("red"));
+        verify(facultyRepositoryMock, times(1)).findByColor("red");
     }
 }
