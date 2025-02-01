@@ -7,7 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -17,6 +17,15 @@ public class StudentController {
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Student>> getAllStudents() {
+        List<Student> faculties = studentService.findAll();
+        if (faculties == null || faculties.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculties);
     }
 
     @GetMapping("{id}")

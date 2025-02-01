@@ -24,6 +24,22 @@ public class StudentServiceTest {
     private StudentServiceImpl out;
 
     @Test
+    public void should_findAll_succeed() {
+        final Student student1 = new Student(1L,"Millicent Bulstrode", 15);
+        final Student student2 = new Student(2L,"Slytherin Duelling Club Captain", 14);
+        when(studentRepositoryMock.findAll()).thenReturn(List.of(student1, student2));
+        assertEquals(List.of(student1, student2), out.findAll());
+        verify(studentRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    public void should_findAll_not_found() {
+        when(studentRepositoryMock.findAll()).thenReturn(List.of());
+        assertEquals(List.of(), out.findAll());
+        verify(studentRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
     public void should_addStudent_succeed() {
         final Student studentSource = new Student("Aurelius Dumbledore", 14);
         final Student studentTarget = new Student(1L, "Aurelius Dumbledore", 14);

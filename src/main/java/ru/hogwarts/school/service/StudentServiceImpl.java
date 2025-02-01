@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,10 @@ public class StudentServiceImpl implements StudentService {
 
     StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+    }
+
+    public List<Student> findAll() {
+        return studentRepository.findAll();
     }
 
     public Student addStudent(Student student) {
