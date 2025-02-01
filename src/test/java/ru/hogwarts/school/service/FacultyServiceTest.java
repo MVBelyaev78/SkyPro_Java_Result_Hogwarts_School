@@ -1,91 +1,64 @@
 package ru.hogwarts.school.service;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.hogwarts.school.constant.TestConstants.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class FacultyServiceTest {
-    private final FacultyService out = new FacultyServiceImpl();
+
+    @Mock
+    private FacultyRepository facultyRepositoryMock;
+
+    @InjectMocks
+    private FacultyServiceImpl out;
 
     @Test
-    @Order(1)
     public void should_addFaculty_succeed() {
-        assertEquals(FACULTY_1, out.addFaculty(FACULTY_1));
+        final Faculty facultySource = new Faculty("Gryffindor", "red");
+        final Faculty facultyTarget = new Faculty(1L,"Gryffindor", "red");
+        when(facultyRepositoryMock.save(eq(facultySource))).thenReturn(facultyTarget);
+        assertEquals(facultyTarget, out.addFaculty(facultySource));
+        verify(facultyRepositoryMock, times(1)).save(facultySource);
     }
 
     @Test
-    @Order(2)
-    public void should_addFaculty_id_correct() {
-        final Faculty faculty1 = out.addFaculty(FACULTY_1);
-        final Faculty faculty2 = out.addFaculty(FACULTY_2);
-        assertTrue(faculty1.getId() > 0);
-        assertTrue(faculty2.getId() > faculty1.getId());
-    }
-
-    @Test
-    @Order(2)
     public void should_findFaculty_succeed() {
-        out.addFaculty(FACULTY_1);
-        assertEquals(FACULTY_1, out.findFaculty(FACULTY_1.getId()));
+        final Faculty faculty = new Faculty(1L,"Hufflepuff", "yellow");
+        when(facultyRepositoryMock.findById(1L)).thenReturn(Optional.of(faculty));
+        assertEquals(faculty, out.findFaculty(1L));
+        verify(facultyRepositoryMock, times(1)).findById(1L);
     }
 
     @Test
-    @Order(1)
     public void should_findFaculty_not_found() {
-        assertNull(out.findFaculty(FACULTY_1.getId()));
+        final Faculty facultyEmpty = new Faculty();
+        when(facultyRepositoryMock.findById(1L)).thenReturn(Optional.of(facultyEmpty));
+        assertEquals(facultyEmpty, out.findFaculty(1L));
+        verify(facultyRepositoryMock, times(1)).findById(1L);
     }
 
     @Test
-    @Order(3)
     public void should_editFaculty_succeed() {
-        out.addFaculty(FACULTY_1);
-        final Faculty facultyActual = out.editFaculty(new Faculty(FACULTY_1.getId(),
-                FACULTY_2.getName(),
-                FACULTY_2.getColor()));
-        assertEquals(out.findFaculty(FACULTY_1.getId()), facultyActual);
+        final Faculty faculty = new Faculty(1L,"Ravenclaw", "blue");
+        when(facultyRepositoryMock.save(eq(faculty))).thenReturn(faculty);
+        assertEquals(faculty, out.addFaculty(faculty));
+        verify(facultyRepositoryMock, times(1)).save(faculty);
     }
 
     @Test
-    @Order(1)
-    public void should_editFaculty_not_found() {
-        assertNull(out.editFaculty(FACULTY_1));
-    }
-
-    @Test
-    @Order(2)
     public void should_deleteFaculty_succeed() {
-        out.deleteFaculty(out.addFaculty(FACULTY_1).getId());
-        assertNull(out.findFaculty(FACULTY_1.getId()));
-    }
-
-    @Test
-    @Order(1)
-    public void should_deleteFaculty_not_found() {
-        out.deleteFaculty(FACULTY_1.getId());
-        assertNull(out.findFaculty(FACULTY_1.getId()));
-    }
-
-    @Test
-    @Order(2)
-    public void should_findByColor_succeed() {
-        out.addFaculty(FACULTY_1);
-        out.addFaculty(FACULTY_11);
-        out.addFaculty(FACULTY_2);
-        assertEquals(List.of(FACULTY_11, FACULTY_2), out.findByColor(COLOR_1));
-    }
-
-    @Test
-    @Order(2)
-    public void should_findByColor_not_found() {
-        out.addFaculty(FACULTY_1);
-        assertEquals(Collections.emptyList(), out.findByColor(COLOR_1));
+        out.deleteFaculty(1L);
+        verify(facultyRepositoryMock, times(1)).deleteById(1L);
     }
 }

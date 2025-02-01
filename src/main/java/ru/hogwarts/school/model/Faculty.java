@@ -1,32 +1,40 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name="faculty")
 public class Faculty {
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name="name")
     private String name;
+
+    @Column(name="color")
     private String color;
 
     public Faculty() {
     }
 
     public Faculty(String name, String color) {
-        this.id = -1;
         this.name = name;
         this.color = color;
     }
 
-    public Faculty(long id, String name, String color) {
+    public Faculty(Long id, String name, String color) {
+        super();
         this.id = id;
-        this.name = name;
-        this.color = color;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,7 +59,7 @@ public class Faculty {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
-                        id == ((Faculty) object).id &&
+                        Objects.equals(id, ((Faculty) object).id) &&
                         Objects.equals(name, ((Faculty) object).name) &&
                         Objects.equals(color, ((Faculty) object).color));
     }

@@ -1,32 +1,40 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name="student")
 public class Student {
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name="name")
     private String name;
+
+    @Column(name="age")
     private Integer age;
 
     public Student() {
     }
 
     public Student(String name, Integer age) {
-        this.id = -1;
         this.name = name;
         this.age = age;
     }
 
-    public Student(long id, String name, Integer age) {
+    public Student(Long id, String name, Integer age) {
+        super();
         this.id = id;
-        this.name = name;
-        this.age = age;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,8 +59,8 @@ public class Student {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
-                        id == ((Student) object).id &&
-                        age == ((Student) object).age &&
+                        Objects.equals(id, ((Student) object).id) &&
+                        Objects.equals(age, ((Student) object).age) &&
                         Objects.equals(name, ((Student) object).name));
     }
 

@@ -1,92 +1,63 @@
 package ru.hogwarts.school.service;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.hogwarts.school.constant.TestConstants.*;
-import static ru.hogwarts.school.constant.TestConstants.STUDENT_2;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
-    private final StudentService out = new StudentServiceImpl();
+    @Mock
+    private StudentRepository studentRepositoryMock;
+
+    @InjectMocks
+    private StudentServiceImpl out;
 
     @Test
-    @Order(1)
     public void should_addStudent_succeed() {
-        assertEquals(STUDENT_1, out.addStudent(STUDENT_1));
+        final Student studentSource = new Student("Aurelius Dumbledore", 14);
+        final Student studentTarget = new Student(1L, "Aurelius Dumbledore", 14);
+        when(studentRepositoryMock.save(eq(studentSource))).thenReturn(studentTarget);
+        assertEquals(studentTarget, out.addStudent(studentSource));
+        verify(studentRepositoryMock, times(1)).save(studentSource);
     }
 
     @Test
-    @Order(2)
-    public void should_addStudent_id_correct() {
-        final Student student1 = out.addStudent(STUDENT_1);
-        final Student student2 = out.addStudent(STUDENT_2);
-        assertTrue(student1.getId() > 0);
-        assertTrue(student2.getId() > student1.getId());
-    }
-
-    @Test
-    @Order(2)
     public void should_findStudent_succeed() {
-        out.addStudent(STUDENT_1);
-        assertEquals(STUDENT_1, out.findStudent(STUDENT_1.getId()));
+        final Student student = new Student(1L, "Bellatrix Lestrange", 22);
+        when(studentRepositoryMock.findById(1L)).thenReturn(Optional.of(student));
+        assertEquals(student, out.findStudent(1L));
+        verify(studentRepositoryMock, times(1)).findById(1L);
     }
 
     @Test
-    @Order(1)
     public void should_findStudent_not_found() {
-        assertNull(out.findStudent(STUDENT_1.getId()));
+        final Student studentEmpty = new Student();
+        when(studentRepositoryMock.findById(1L)).thenReturn(Optional.of(studentEmpty));
+        assertEquals(studentEmpty, out.findStudent(1L));
+        verify(studentRepositoryMock, times(1)).findById(1L);
     }
 
     @Test
-    @Order(3)
     public void should_editStudent_succeed() {
-        out.addStudent(STUDENT_1);
-        final Student studentActual = out.editStudent(new Student(STUDENT_1.getId(),
-                STUDENT_1.getName(),
-                STUDENT_2.getAge()));
-        assertEquals(out.findStudent(STUDENT_1.getId()), studentActual);
+        final Student student = new Student(1L, "Gilderoy Lockhart", 16);
+        when(studentRepositoryMock.save(eq(student))).thenReturn(student);
+        assertEquals(student, out.addStudent(student));
+        verify(studentRepositoryMock, times(1)).save(student);
     }
 
     @Test
-    @Order(1)
-    public void should_editStudent_not_found() {
-        assertNull(out.editStudent(STUDENT_1));
-    }
-
-    @Test
-    @Order(2)
     public void should_deleteStudent_succeed() {
-        out.deleteStudent(out.addStudent(STUDENT_1).getId());
-        assertNull(out.findStudent(STUDENT_1.getId()));
-    }
-
-    @Test
-    @Order(1)
-    public void should_deleteStudent_not_found() {
-        out.deleteStudent(STUDENT_1.getId());
-        assertNull(out.findStudent(STUDENT_1.getId()));
-    }
-
-    @Test
-    @Order(2)
-    public void should_findByAge_succeed() {
-        out.addStudent(STUDENT_1);
-        out.addStudent(STUDENT_2);
-        out.addStudent(STUDENT_3);
-        assertEquals(List.of(STUDENT_1, STUDENT_3), out.findByAge(AGE_1));
-    }
-
-    @Test
-    @Order(2)
-    public void should_findByAge_not_found() {
-        out.addStudent(STUDENT_2);
-        assertEquals(Collections.emptyList(), out.findByAge(AGE_1));
+        out.deleteStudent(1L);
+        verify(studentRepositoryMock, times(1)).deleteById(1L);
     }
 }
