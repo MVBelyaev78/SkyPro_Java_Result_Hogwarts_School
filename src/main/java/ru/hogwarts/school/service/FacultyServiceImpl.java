@@ -34,10 +34,6 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Collection<Faculty> findByColor(String color) {
-        return facultyRepository
-                .findAll()
-                .stream()
-                .filter(faculty -> Objects.equals(faculty.getColor(), color))
-                .collect(Collectors.toList());
+        return facultyRepository.findByColor(color);
     }
 }

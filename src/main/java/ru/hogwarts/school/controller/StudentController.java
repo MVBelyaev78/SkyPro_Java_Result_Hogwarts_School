@@ -49,7 +49,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Integer age) {
-        return ResponseEntity.ok(age > 0 ? studentService.findByAge(age) : Collections.emptyList());
+    public ResponseEntity<Collection<Student>> findByAge(
+            @RequestParam(name = "age", required = false) Integer age) {
+        return ResponseEntity.ok(studentService.findByAge(age));
     }
 }
