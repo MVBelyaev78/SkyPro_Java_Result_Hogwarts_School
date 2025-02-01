@@ -7,7 +7,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,7 +19,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Faculty>> getAllFaculties() {
         List<Faculty> faculties = facultyService.findAll();
         if (faculties == null || faculties.isEmpty()) {
@@ -58,9 +57,8 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> findByColor(
-            @RequestParam(name = "color", required = false) String color) {
+    @GetMapping(params = "color")
+    public ResponseEntity<Collection<Faculty>> findByColor(@RequestParam(name = "color") String color) {
         Collection<Faculty> faculties = facultyService.findByColor(color);
         if (faculties == null || faculties.isEmpty()) {
             return ResponseEntity.notFound().build();

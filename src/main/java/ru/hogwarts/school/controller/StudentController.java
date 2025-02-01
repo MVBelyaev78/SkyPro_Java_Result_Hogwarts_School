@@ -19,7 +19,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> faculties = studentService.findAll();
         if (faculties == null || faculties.isEmpty()) {
@@ -57,9 +57,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Student>> findByAge(
-            @RequestParam(name = "age", required = false) Integer age) {
+    @GetMapping(params = "age")
+    public ResponseEntity<Collection<Student>> findByAge(@RequestParam(name = "age") Integer age) {
         Collection<Student> students = studentService.findByAge(age);
         if (students == null || students.isEmpty()) {
             return ResponseEntity.notFound().build();
