@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,5 +60,21 @@ public class StudentServiceTest {
     public void should_deleteStudent_succeed() {
         out.deleteStudent(1L);
         verify(studentRepositoryMock, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void should_findByAge_succeed() {
+        final Student student1 = new Student(1L, "Remus John Lupin", 11);
+        final Student student2 = new Student(2L, "Ginevra Molly Weasley", 11);
+        when(studentRepositoryMock.findByAge(11)).thenReturn(List.of(student1, student2));
+        assertEquals(List.of(student1, student2), out.findByAge(11));
+        verify(studentRepositoryMock, times(1)).findByAge(11);
+    }
+
+    @Test
+    public void should_findByAge_not_found() {
+        when(studentRepositoryMock.findByAge(13)).thenReturn(List.of());
+        assertEquals(List.of(), out.findByAge(13));
+        verify(studentRepositoryMock, times(1)).findByAge(13);
     }
 }
