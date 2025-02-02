@@ -17,6 +17,10 @@ public class Student {
     @Column(name="age")
     private Integer age;
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
     public Student() {
     }
 
@@ -52,6 +56,10 @@ public class Student {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
     }
 
     @Override
