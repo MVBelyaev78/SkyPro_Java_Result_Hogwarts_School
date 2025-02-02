@@ -93,4 +93,34 @@ public class FacultyServiceTest {
         assertEquals(List.of(), out.findByColor("red"));
         verify(facultyRepositoryMock, times(1)).findByColor("red");
     }
+
+    @Test
+    public void should_findByNameOrColorContainsIgnoreCase_name_succeed() {
+        final Faculty faculty1 = new Faculty(1L,"GryfFindor", "scarlet");
+        final Faculty faculty2 = new Faculty(2L,"Hufflepuff", "black");
+        when(facultyRepositoryMock.findByNameOrColorContainsIgnoreCase("ff"))
+                .thenReturn(List.of(faculty1, faculty2));
+        assertEquals(List.of(faculty1, faculty2), out.findByNameOrColorContainsIgnoreCase("ff"));
+        verify(facultyRepositoryMock, times(1))
+                .findByNameOrColorContainsIgnoreCase("ff");
+    }
+
+    @Test
+    public void should_findByNameOrColorContainsIgnoreCase_color_succeed() {
+        final Faculty faculty1 = new Faculty(1L,"Hufflepuff", "light-yellow");
+        final Faculty faculty2 = new Faculty(2L,"Ravenclaw", "orange-yelLow");
+        when(facultyRepositoryMock.findByNameOrColorContainsIgnoreCase("ello"))
+                .thenReturn(List.of(faculty1, faculty2));
+        assertEquals(List.of(faculty1, faculty2), out.findByNameOrColorContainsIgnoreCase("ello"));
+        verify(facultyRepositoryMock, times(1))
+                .findByNameOrColorContainsIgnoreCase("ello");
+    }
+
+    @Test
+    public void should_findByNameOrColorContainsIgnoreCase_not_found() {
+        when(facultyRepositoryMock.findByNameOrColorContainsIgnoreCase("red")).thenReturn(List.of());
+        assertEquals(List.of(), out.findByNameOrColorContainsIgnoreCase("red"));
+        verify(facultyRepositoryMock, times(1))
+                .findByNameOrColorContainsIgnoreCase("red");
+    }
 }

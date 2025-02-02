@@ -65,4 +65,14 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculties);
     }
+
+    @GetMapping(params = "filter")
+    public ResponseEntity<Collection<Faculty>> findByNameOrColorContainsIgnoreCase(
+            @RequestParam(name = "filter") String filter) {
+        Collection<Faculty> faculties = facultyService.findByNameOrColorContainsIgnoreCase(filter);
+        if (faculties == null || faculties.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculties);
+    }
 }
