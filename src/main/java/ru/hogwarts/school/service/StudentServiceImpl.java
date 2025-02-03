@@ -1,12 +1,12 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -17,6 +17,10 @@ public class StudentServiceImpl implements StudentService {
 
     StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+    }
+
+    public List<Student> findAll() {
+        return studentRepository.findAll();
     }
 
     public Student addStudent(Student student) {
@@ -37,10 +41,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Collection<Student> findByAge(Integer age) {
-        return studentRepository
-                .findAll()
-                .stream()
-                .filter(student -> Objects.equals(student.getAge(), age))
-                .collect(Collectors.toList());
+        return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> findByAgeBetween(Integer startAge, Integer endAge) {
+        return studentRepository.findByAgeBetween(startAge, endAge);
     }
 }
