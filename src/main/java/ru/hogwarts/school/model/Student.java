@@ -69,14 +69,13 @@ public class Student {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
-                        Objects.equals(id, ((Student) object).id) &&
                         Objects.equals(age, ((Student) object).age) &&
                         Objects.equals(name, ((Student) object).name));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(name, age);
     }
 
     @Override
