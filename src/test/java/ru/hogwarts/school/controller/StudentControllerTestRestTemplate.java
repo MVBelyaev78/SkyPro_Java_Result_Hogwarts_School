@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Student;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class StudentControllerTest {
+public class StudentControllerTestRestTemplate {
     @LocalServerPort
     private int port;
 
