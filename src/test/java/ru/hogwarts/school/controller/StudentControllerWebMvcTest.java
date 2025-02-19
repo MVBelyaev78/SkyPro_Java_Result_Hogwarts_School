@@ -78,7 +78,10 @@ public class StudentControllerWebMvcTest {
 
     @Test
     public void test_createStudent_succeed() throws Exception {
-        final Student student = new Student("John Lennon", 30);
+        Student student = new Student();
+        student.setId(1L);
+        student.setName("John Lennon");
+        student.setAge(30);
         when(studentService.addStudent(any(Student.class))).thenReturn(student);
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/student")
@@ -87,13 +90,17 @@ public class StudentControllerWebMvcTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("John Lennon"))
                 .andExpect(jsonPath("$.age").value(30));
     }
 
     @Test
     public void test_editStudent_succeed() throws Exception {
-        final Student student = new Student("John Lennon", 30);
+        Student student = new Student();
+        student.setId(1L);
+        student.setName("John Lennon");
+        student.setAge(30);
         when(studentService.editStudent(any(Student.class))).thenReturn(student);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/student")
@@ -102,6 +109,7 @@ public class StudentControllerWebMvcTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("John Lennon"))
                 .andExpect(jsonPath("$.age").value(30));
     }

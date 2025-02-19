@@ -79,7 +79,10 @@ public class FacultyControllerWebMvcTest {
 
     @Test
     public void test_CreateFaculty_succeed() throws Exception {
-        final Faculty faculty = new Faculty("Ravenclaw", "dark-blue");
+        Faculty faculty = new Faculty();
+        faculty.setId(1L);
+        faculty.setName("Ravenclaw");
+        faculty.setColor("dark-blue");
         when(facultyService.addFaculty(any(Faculty.class))).thenReturn(faculty);
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculty")
@@ -88,13 +91,17 @@ public class FacultyControllerWebMvcTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Ravenclaw"))
                 .andExpect(jsonPath("$.color").value("dark-blue"));
     }
 
     @Test
     public void test_editFaculty_succeed() throws Exception {
-        final Faculty faculty = new Faculty("Gryffindor", "dark-red");
+        Faculty faculty = new Faculty();
+        faculty.setId(1L);
+        faculty.setName("Gryffindor");
+        faculty.setColor("dark-red");
         when(facultyService.editFaculty(any(Faculty.class))).thenReturn(faculty);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/faculty")
@@ -103,6 +110,7 @@ public class FacultyControllerWebMvcTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.name").value("Gryffindor"))
                 .andExpect(jsonPath("$.color").value("dark-red"));
     }
