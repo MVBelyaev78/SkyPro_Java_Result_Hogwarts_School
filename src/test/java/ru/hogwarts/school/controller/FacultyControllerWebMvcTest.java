@@ -51,8 +51,7 @@ public class FacultyControllerWebMvcTest {
 
     @Test
     public void test_getAllFaculties_when_faculties_do_not_exist() throws Exception {
-        when(facultyService.findAll())
-                .thenThrow(FacultyNotFoundException.class);
+        when(facultyService.findAll()).thenThrow(new FacultyNotFoundException());
         mockMvc.perform(MockMvcRequestBuilders.get("/faculty"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -96,7 +95,7 @@ public class FacultyControllerWebMvcTest {
     @Test
     public void test_editFaculty_succeed() throws Exception {
         final Faculty faculty = new Faculty("Gryffindor", "dark-red");
-        when(facultyService.editFaculty(faculty)).thenReturn(faculty);
+        when(facultyService.editFaculty(any(Faculty.class))).thenReturn(faculty);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/faculty")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -51,7 +51,7 @@ public class StudentControllerWebMvcTest {
 
     @Test
     public void test_getAllStudents_when_students_do_not_exist() throws Exception {
-        when(studentService.findAll()).thenThrow(StudentNotFoundException.class);
+        when(studentService.findAll()).thenThrow(new StudentNotFoundException());
         mockMvc.perform(MockMvcRequestBuilders.get("/student"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -94,7 +94,7 @@ public class StudentControllerWebMvcTest {
     @Test
     public void test_editStudent_succeed() throws Exception {
         final Student student = new Student("John Lennon", 30);
-        when(studentService.editStudent(student)).thenReturn(student);
+        when(studentService.editStudent(any(Student.class))).thenReturn(student);
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/student")
                         .contentType(MediaType.APPLICATION_JSON)
