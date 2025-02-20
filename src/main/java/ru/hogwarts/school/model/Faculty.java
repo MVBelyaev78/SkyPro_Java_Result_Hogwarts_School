@@ -69,14 +69,13 @@ public class Faculty {
         return (this == object ||
                 object != null &&
                         getClass() == object.getClass() &&
-                        Objects.equals(id, ((Faculty) object).id) &&
                         Objects.equals(name, ((Faculty) object).name) &&
                         Objects.equals(color, ((Faculty) object).color));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, color);
+        return Objects.hash(name, color);
     }
 
     @Override
