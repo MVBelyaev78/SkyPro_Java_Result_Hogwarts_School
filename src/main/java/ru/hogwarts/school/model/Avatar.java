@@ -1,9 +1,6 @@
 package ru.hogwarts.school.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 @Entity
 public class Avatar {
@@ -17,6 +14,9 @@ public class Avatar {
 
     @Lob
     private byte[] data;
+
+    @OneToOne
+    private Student student;
 
     public Long getId() {
         return id;
@@ -56,5 +56,13 @@ public class Avatar {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }
