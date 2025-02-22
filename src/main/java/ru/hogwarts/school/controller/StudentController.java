@@ -22,11 +22,11 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> faculties = studentService.findAll();
-        if (faculties == null || faculties.isEmpty()) {
+        List<Student> students = studentService.findAll();
+        if (students == null || students.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(faculties);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("{id}")
