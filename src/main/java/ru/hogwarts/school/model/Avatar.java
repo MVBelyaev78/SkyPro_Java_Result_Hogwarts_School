@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
+@Table(name = "avatar")
 public class Avatar {
     @Id
     @GeneratedValue
