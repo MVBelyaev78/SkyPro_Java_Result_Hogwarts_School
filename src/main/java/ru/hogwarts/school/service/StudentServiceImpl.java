@@ -27,7 +27,7 @@ public class StudentServiceImpl implements StudentService {
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 
-    StudentServiceImpl(StudentRepository studentRepository, AvatarRepository avatarRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
     }
