@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -61,14 +62,17 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByAgeBetween(startAge, endAge);
     }
 
-    public Avatar findAvatar(long studentId) {
+    public Avatar findAvatarInDataBase(long studentId) {
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
         Student student = findStudent(studentId);
 
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(file.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir,
+                String.format("%s.%s",
+                        studentId,
+                        getExtension(Objects.requireNonNull(file.getOriginalFilename()))));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
