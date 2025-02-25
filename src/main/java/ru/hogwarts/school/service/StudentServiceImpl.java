@@ -25,9 +25,6 @@ public class StudentServiceImpl implements StudentService {
     final StudentRepository studentRepository;
     final AvatarRepository avatarRepository;
 
-    @Value("${path.to.avatars.folder}")
-    private String avatarsDir;
-
     public StudentServiceImpl(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -62,34 +59,6 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByAgeBetween(startAge, endAge);
     }
 
-    public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
-        Student student = findStudent(studentId);
-
-        Path filePath = Path.of(avatarsDir,
-                String.format("%s.%s",
-                        studentId,
-                        getExtension(Objects.requireNonNull(file.getOriginalFilename()))));
-        Files.createDirectories(filePath.getParent());
-        Files.deleteIfExists(filePath);
-
-        try (InputStream is = file.getInputStream();
-             OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-             BufferedInputStream bis = new BufferedInputStream(is, 1024);
-             BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-        ) {
-            bis.transferTo(bos);
-        }
-
-        Avatar avatar = avatarRepository.findByStudentId(studentId).orElseGet(Avatar::new);
-        avatar.setStudent(student);
-        avatar.setFilePath(filePath.toString());
-        avatar.setFileSize(file.getSize());
-        avatar.setMediaType(file.getContentType());
-        avatar.setData(file.getBytes());
-
-        avatarRepository.save(avatar);
-    }
-
     public Long findStudentsCount() {
         return studentRepository.findStudentsCount();
     }
@@ -100,9 +69,5 @@ public class StudentServiceImpl implements StudentService {
 
     public Collection<Student> findLastStudents(Integer num) {
         return studentRepository.findLastStudents(num);
-    }
-
-    private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
