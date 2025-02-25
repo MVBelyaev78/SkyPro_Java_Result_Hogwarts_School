@@ -94,6 +94,18 @@ public class StudentServiceImpl implements StudentService {
         avatarRepository.save(avatar);
     }
 
+    public Long findStudentsCount() {
+        return studentRepository.findStudentsCount();
+    }
+
+    public Double findStudentsAverageAge() {
+        return studentRepository.findStudentsAverageAge();
+    }
+
+    public Collection<Student> findLastStudents(Integer num) {
+        return studentRepository.findLastStudents(num);
+    }
+
     private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }

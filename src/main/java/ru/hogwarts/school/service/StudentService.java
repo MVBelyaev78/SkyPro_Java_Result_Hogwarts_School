@@ -26,4 +26,10 @@ public interface StudentService {
     Avatar findAvatarInDataBase(long studentId);
 
     void uploadAvatar(Long studentId, MultipartFile file) throws IOException;
+
+    Long findStudentsCount();
+
+    Double findStudentsAverageAge();
+
+    Collection<Student> findLastStudents(Integer num);
 }

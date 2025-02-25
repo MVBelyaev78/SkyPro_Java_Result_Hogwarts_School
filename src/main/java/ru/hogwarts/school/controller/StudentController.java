@@ -136,4 +136,27 @@ public class StudentController {
             is.transferTo(os);
         }
     }
+
+    @GetMapping(value = "/count")
+    public ResponseEntity<Long> findStudentsCount() {
+        return ResponseEntity.ok(studentService.findStudentsCount());
+    }
+
+    @GetMapping(value = "/average_age")
+    public ResponseEntity<Double> findStudentsAverageAge() {
+        return ResponseEntity.ok(studentService.findStudentsAverageAge());
+    }
+
+    @GetMapping(value = "/last", params = "num")
+    public ResponseEntity<Collection<Student>> findLastStudents(@RequestParam(name = "num") Integer num) {
+        if (num < 0) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Collection<Student> students = studentService.findLastStudents(num);
+        if (students == null || students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
 }
