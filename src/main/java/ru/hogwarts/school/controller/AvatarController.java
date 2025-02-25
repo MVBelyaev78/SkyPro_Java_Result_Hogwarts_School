@@ -40,7 +40,7 @@ public class AvatarController {
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
 
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+        return ResponseEntity.ok().headers(headers).body(avatar.getData());
     }
 
     @PostMapping(value = "/student/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
