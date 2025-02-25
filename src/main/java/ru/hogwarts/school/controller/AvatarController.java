@@ -1,15 +1,21 @@
 package ru.hogwarts.school.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.service.AvatarService;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("")
@@ -40,5 +46,23 @@ public class AvatarController {
 
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/student/{studentId}/avatar")
+    public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException {
+        Avatar avatar = avatarService.findAvatarInDataBase(studentId);
+
+        Path path = Path.of(avatar.getFilePath());
+        if (Files.notExists(path)) {
+            throw new AvatarNotFoundException();
+        }
+
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream();) {
+            response.setStatus(HttpStatus.OK.value());
+            response.setContentType(avatar.getMediaType());
+            response.setContentLength((int) avatar.getFileSize());
+            is.transferTo(os);
+        }
     }
 }

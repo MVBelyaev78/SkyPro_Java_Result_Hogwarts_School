@@ -1,24 +1,12 @@
 package ru.hogwarts.school.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.exception.AvatarNotFoundException;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,11 +15,9 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
-    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService, AvatarService avatarService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        this.avatarService = avatarService;
     }
 
     @GetMapping
@@ -98,24 +84,6 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
-    }
-
-    @GetMapping(value = "/{studentId}/avatar")
-    public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException {
-        Avatar avatar = avatarService.findAvatarInDataBase(studentId);
-
-        Path path = Path.of(avatar.getFilePath());
-        if (Files.notExists(path)) {
-            throw new AvatarNotFoundException();
-        }
-
-        try (InputStream is = Files.newInputStream(path);
-             OutputStream os = response.getOutputStream();) {
-            response.setStatus(HttpStatus.OK.value());
-            response.setContentType(avatar.getMediaType());
-            response.setContentLength((int) avatar.getFileSize());
-            is.transferTo(os);
-        }
     }
 
     @GetMapping(value = "/count")
