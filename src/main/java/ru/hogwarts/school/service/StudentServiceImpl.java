@@ -62,10 +62,6 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByAgeBetween(startAge, endAge);
     }
 
-    public Avatar findAvatarInDataBase(long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElseThrow();
-    }
-
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
         Student student = findStudent(studentId);
 

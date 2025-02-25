@@ -11,6 +11,7 @@ import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
 import java.io.IOException;
@@ -26,9 +27,11 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, AvatarService avatarService) {
         this.studentService = studentService;
+        this.avatarService = avatarService;
     }
 
     @GetMapping
@@ -108,20 +111,9 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{studentId}/avatar/preview")
-    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long studentId) {
-        Avatar avatar = studentService.findAvatarInDataBase(studentId);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getData().length);
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
-    }
-
     @GetMapping(value = "/{studentId}/avatar")
     public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException {
-        Avatar avatar = studentService.findAvatarInDataBase(studentId);
+        Avatar avatar = avatarService.findAvatarInDataBase(studentId);
 
         Path path = Path.of(avatar.getFilePath());
         if (Files.notExists(path)) {
