@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("")
@@ -26,9 +27,14 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
+    @GetMapping("/avatar")
+    public ResponseEntity<List<Avatar>> downloadAllAvatars(Integer pageNumber, Integer pageSize) {
+        return ResponseEntity.ok(avatarService.findAvatarInDataBase(pageNumber, pageSize));
+    }
+
     @GetMapping(value = "/student/{studentId}/avatar/preview")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long studentId) {
-        Avatar avatar = avatarService.findAvatarInDataBase(studentId);
+        Avatar avatar = avatarService.findAvatarInDataBaseByStudent(studentId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
@@ -50,7 +56,7 @@ public class AvatarController {
 
     @GetMapping(value = "/student/{studentId}/avatar")
     public void downloadAvatar(@PathVariable Long studentId, HttpServletResponse response) throws IOException {
-        Avatar avatar = avatarService.findAvatarInDataBase(studentId);
+        Avatar avatar = avatarService.findAvatarInDataBaseByStudent(studentId);
 
         Path path = Path.of(avatar.getFilePath());
         if (Files.notExists(path)) {
