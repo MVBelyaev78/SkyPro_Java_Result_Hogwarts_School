@@ -23,7 +23,9 @@ public interface StudentService {
 
     Collection<Student> findByAgeBetween(Integer startAge, Integer endAge);
 
-    Avatar findAvatarInDataBase(long studentId);
+    Long findStudentsCount();
 
-    void uploadAvatar(Long studentId, MultipartFile file) throws IOException;
+    Double findStudentsAverageAge();
+
+    Collection<Student> findLastStudents(Integer num);
 }
