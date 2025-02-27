@@ -7,18 +7,25 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "avatar")
+@Table(name = "public.tbl_avatar")
 public class Avatar {
     @Id
     @GeneratedValue
+    @Column(name = "id_avatar")
     private Long id;
 
+    @Column(name = "nm_file_path")
     private String filePath;
+
+    @Column(name = "nn_file_size")
     private long fileSize;
+
+    @Column(name = "nm_media_type")
     private String mediaType;
 
     @Lob
     @JsonIgnore
+    @Column(name = "vl_data")
     private byte[] data;
 
     @OneToOne

@@ -7,16 +7,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="faculty")
+@Table(name="public.tbl_faculty")
 public class Faculty {
     @Id
     @GeneratedValue
+    @Column(name = "id_faculty")
     private Long id;
 
-    @Column(name="name")
+    @Column(name="nm_name")
     private String name;
 
-    @Column(name="color")
+    @Column(name="nm_color")
     private String color;
 
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)

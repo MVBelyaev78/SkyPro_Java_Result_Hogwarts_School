@@ -6,20 +6,21 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="student")
+@Table(name="public.tbl_student")
 public class Student {
     @Id
     @GeneratedValue
+    @Column(name = "id_student")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "nm_name")
     private String name;
 
-    @Column(name="age")
+    @Column(name = "nn_age")
     private Integer age;
 
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
+    @JoinColumn(name = "id_faculty")
     @JsonIgnore
     private Faculty faculty;
 
