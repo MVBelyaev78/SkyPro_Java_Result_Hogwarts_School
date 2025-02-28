@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="public.tbl_faculty")
+@Table(name="tbl_faculty", schema = "public")
 public class Faculty {
     @Id
     @GeneratedValue

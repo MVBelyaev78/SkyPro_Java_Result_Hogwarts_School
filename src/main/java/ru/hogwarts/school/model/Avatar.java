@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "public.tbl_avatar")
+@Table(name = "tbl_avatar", schema = "public")
 public class Avatar {
     @Id
     @GeneratedValue
@@ -29,6 +29,7 @@ public class Avatar {
     private byte[] data;
 
     @OneToOne
+    @PrimaryKeyJoinColumn(name = "id_student")
     private Student student;
 
     public Avatar() {

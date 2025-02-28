@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
@@ -39,7 +40,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public Avatar findAvatarInDataBaseByStudent(long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElseThrow();
+        return avatarRepository.findByStudentId(studentId).orElseThrow(AvatarNotFoundException::new);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {

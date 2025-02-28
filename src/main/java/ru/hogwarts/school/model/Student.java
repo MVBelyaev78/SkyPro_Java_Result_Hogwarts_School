@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="public.tbl_student")
+@Table(name="tbl_student", schema = "public")
 public class Student {
     @Id
     @GeneratedValue
