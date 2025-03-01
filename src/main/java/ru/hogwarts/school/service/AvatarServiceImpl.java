@@ -25,7 +25,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
 
-    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     final AvatarRepository avatarRepository;
     final StudentService studentService;
@@ -39,14 +39,14 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public List<Avatar> findAvatarInDataBase(Integer pageNumber, Integer pageSize) {
-        logger.info(format("findAvatarInDataBase: pageNumber=%s, pageSize=%s", pageNumber, pageSize));
+        logger.info("findAvatarInDataBase: pageNumber={}, pageSize={}", pageNumber, pageSize);
         return avatarRepository
                 .findAll(PageRequest.of(pageNumber - 1, pageSize))
                 .getContent();
     }
 
     public Avatar findAvatarInDataBaseByStudent(long studentId) {
-        logger.info(format("findAvatarInDataBaseByStudent: studentId=%s, pageSize=%s", studentId));
+        logger.info("findAvatarInDataBaseByStudent: studentId={}", studentId);
         return avatarRepository.findByStudentId(studentId).orElseThrow(AvatarNotFoundException::new);
     }
 
