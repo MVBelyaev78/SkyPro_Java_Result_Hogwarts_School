@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.String.format;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
@@ -38,21 +39,24 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public List<Avatar> findAvatarInDataBase(Integer pageNumber, Integer pageSize) {
-        logger.info(String.format("findAvatarInDataBase: pageNumber=%s, pageSize=%s", pageNumber, pageSize));
+        logger.info(format("findAvatarInDataBase: pageNumber=%s, pageSize=%s", pageNumber, pageSize));
         return avatarRepository
                 .findAll(PageRequest.of(pageNumber - 1, pageSize))
                 .getContent();
     }
 
     public Avatar findAvatarInDataBaseByStudent(long studentId) {
+        logger.info(format("findAvatarInDataBaseByStudent: studentId=%s, pageSize=%s", studentId));
         return avatarRepository.findByStudentId(studentId).orElseThrow(AvatarNotFoundException::new);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
+        logger.info("uploadAvatar: studentId={}", studentId);
+
         Student student = studentService.findStudent(studentId);
 
         Path filePath = Path.of(avatarsDir,
-                String.format("%s.%s",
+                format("%s.%s",
                         studentId,
                         getExtension(Objects.requireNonNull(file.getOriginalFilename()))));
         Files.createDirectories(filePath.getParent());
