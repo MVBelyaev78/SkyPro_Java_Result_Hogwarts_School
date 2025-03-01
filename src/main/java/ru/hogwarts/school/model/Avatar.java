@@ -29,7 +29,7 @@ public class Avatar {
     private byte[] data;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "id_student")
+    @JoinColumn(name = "id_student")
     private Student student;
 
     public Avatar() {
