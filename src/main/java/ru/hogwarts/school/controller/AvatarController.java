@@ -29,7 +29,11 @@ public class AvatarController {
 
     @GetMapping("/avatar")
     public ResponseEntity<List<Avatar>> downloadAllAvatars(Integer pageNumber, Integer pageSize) {
-        return ResponseEntity.ok(avatarService.findAvatarInDataBase(pageNumber, pageSize));
+        List<Avatar> avatarList = avatarService.findAvatarInDataBase(pageNumber, pageSize);
+        if (avatarList == null || avatarList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(avatarList);
     }
 
     @GetMapping(value = "/student/{studentId}/avatar/preview")
