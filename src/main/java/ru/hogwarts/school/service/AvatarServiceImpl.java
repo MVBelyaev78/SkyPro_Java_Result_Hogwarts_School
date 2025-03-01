@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
 
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     final AvatarRepository avatarRepository;
     final StudentService studentService;
 
@@ -34,6 +38,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public List<Avatar> findAvatarInDataBase(Integer pageNumber, Integer pageSize) {
+        logger.info(String.format("findAvatarInDataBase: pageNumber=%s, pageSize=%s", pageNumber, pageSize));
         return avatarRepository
                 .findAll(PageRequest.of(pageNumber - 1, pageSize))
                 .getContent();
