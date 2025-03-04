@@ -29,7 +29,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
-    @GetMapping("{id}")
+    @GetMapping(value = "{id}")
     public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
@@ -52,13 +52,13 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(params = "color")
+    @GetMapping(value = "color", params = "color")
     public ResponseEntity<Collection<Faculty>> findByColor(@RequestParam(name = "color") String color) {
         Collection<Faculty> faculties = facultyService.findByColor(color);
         if (faculties == null || faculties.isEmpty()) {
@@ -67,7 +67,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
-    @GetMapping(params = "filter")
+    @GetMapping(value = "filter", params = "filter")
     public ResponseEntity<Collection<Faculty>> findByNameOrColorContainsIgnoreCase(
             @RequestParam(name = "filter") String filter) {
         Collection<Faculty> faculties = facultyService.findByNameOrColorContainsIgnoreCase(filter);
@@ -77,7 +77,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
-    @GetMapping("{facultyId}/students")
+    @GetMapping(value = "{facultyId}/students")
     public ResponseEntity<List<Student>> getFacultyStudents(@PathVariable Long facultyId) {
         List<Student> students = facultyService.findFaculty(facultyId).getStudents();
         if (students == null || students.isEmpty()) {

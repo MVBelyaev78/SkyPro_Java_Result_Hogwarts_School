@@ -13,9 +13,9 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
     @Query(value =
                     "select f.*\n" +
-                    "  from faculty f\n" +
-                    " where (lower(f.color) like '%' || ?1 || '%'\n" +
-                    "    or  lower(f.\"name\") like '%' || ?1 || '%'\n" +
+                    "  from tbl_faculty f\n" +
+                    " where (lower(f.nm_color) like '%' || ?1 || '%'\n" +
+                    "    or  lower(f.\"nm_name\") like '%' || ?1 || '%'\n" +
                     "       )",
             nativeQuery = true)
     Collection<Faculty> findByNameOrColorContainsIgnoreCase(String stringFilter);
