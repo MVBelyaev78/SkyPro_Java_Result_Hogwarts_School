@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,14 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.String.format;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
+    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     final AvatarRepository avatarRepository;
     final StudentService studentService;
@@ -34,20 +39,24 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public List<Avatar> findAvatarInDataBase(Integer pageNumber, Integer pageSize) {
+        logger.info("AvatarService.findAvatarInDataBase: pageNumber={}, pageSize={}", pageNumber, pageSize);
         return avatarRepository
                 .findAll(PageRequest.of(pageNumber - 1, pageSize))
                 .getContent();
     }
 
     public Avatar findAvatarInDataBaseByStudent(long studentId) {
+        logger.info("AvatarService.findAvatarInDataBaseByStudent: studentId={}", studentId);
         return avatarRepository.findByStudentId(studentId).orElseThrow(AvatarNotFoundException::new);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile file) throws IOException {
+        logger.info("AvatarService.uploadAvatar: studentId={}", studentId);
+
         Student student = studentService.findStudent(studentId);
 
         Path filePath = Path.of(avatarsDir,
-                String.format("%s.%s",
+                format("%s.%s",
                         studentId,
                         getExtension(Objects.requireNonNull(file.getOriginalFilename()))));
         Files.createDirectories(filePath.getParent());
