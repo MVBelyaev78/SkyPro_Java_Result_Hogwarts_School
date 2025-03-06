@@ -62,11 +62,11 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findLastStudents(num);
     }
 
-    public List<String> findStudentsWithNamesFromSymbol(char firstSymbol) {
+    public List<String> findStudentsWithNamesFromSymbol(String firstWord) {
         return studentRepository
                 .findAll()
                 .stream()
-                .filter(s -> s.getName().toUpperCase().charAt(0) == firstSymbol)
+                .filter(s -> s.getName().startsWith(firstWord))
                 .map(s -> s.getName().toUpperCase())
                 .sorted(String::compareTo)
                 .collect(Collectors.toList());

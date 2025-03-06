@@ -21,5 +21,5 @@ public interface FacultyService {
 
     Collection<Faculty> findByNameOrColorContainsIgnoreCase(String stringFilter);
 
-    @org.jetbrains.annotations.NotNull Optional<List<String>> findLongestFacultyNames();
+    Optional<List<String>> findLongestFacultyNames();
 }

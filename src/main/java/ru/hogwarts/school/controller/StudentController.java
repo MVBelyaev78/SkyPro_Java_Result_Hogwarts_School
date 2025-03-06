@@ -118,8 +118,8 @@ public class StudentController {
     }
 
     @GetMapping(value = "/first_symbol", params = "firstSymbol")
-    public ResponseEntity<List<String>> findStudentsWithNamesFromSymbol(@RequestParam(name = "firstSymbol") char firstSymbol) {
-        List<String> studentsNames = studentService.findStudentsWithNamesFromSymbol(firstSymbol);
+    public ResponseEntity<List<String>> findStudentsWithNamesFromSymbol(@RequestParam(name = "firstSymbol") String firstWord) {
+        List<String> studentsNames = studentService.findStudentsWithNamesFromSymbol(firstWord);
         if (studentsNames == null || studentsNames.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

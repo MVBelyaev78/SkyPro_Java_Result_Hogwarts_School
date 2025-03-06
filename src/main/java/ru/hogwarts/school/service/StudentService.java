@@ -27,7 +27,7 @@ public interface StudentService {
 
     Collection<Student> findLastStudents(Integer num);
 
-    List<String> findStudentsWithNamesFromSymbol(char firstSymbol);
+    List<String> findStudentsWithNamesFromSymbol(String firstWord);
 
     OptionalDouble findStudentsAverageAge2();
 }
