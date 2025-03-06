@@ -4,6 +4,7 @@ import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 
 public interface StudentService {
     List<Student> findAll();
@@ -27,4 +28,6 @@ public interface StudentService {
     Collection<Student> findLastStudents(Integer num);
 
     List<String> findStudentsWithNamesFromSymbol(char firstSymbol);
+
+    OptionalDouble findStudentsAverageAge2();
 }
