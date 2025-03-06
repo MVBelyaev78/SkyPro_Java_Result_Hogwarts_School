@@ -8,6 +8,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -58,5 +59,15 @@ public class StudentServiceImpl implements StudentService {
 
     public Collection<Student> findLastStudents(Integer num) {
         return studentRepository.findLastStudents(num);
+    }
+
+    public List<String> findStudentsWithNamesFromSymbol(char firstSymbol) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(s -> s.getName().toUpperCase().charAt(0) == firstSymbol)
+                .map(s -> s.getName().toUpperCase())
+                .sorted(String::compareTo)
+                .collect(Collectors.toList());
     }
 }
