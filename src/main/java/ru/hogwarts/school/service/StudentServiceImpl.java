@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 public class StudentServiceImpl implements StudentService {
 
-    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     final StudentRepository studentRepository;
 

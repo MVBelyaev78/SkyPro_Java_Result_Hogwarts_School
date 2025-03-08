@@ -12,7 +12,7 @@ import java.util.*;
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
-    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyServiceImpl.class);
 
     private final FacultyRepository facultyRepository;
 
