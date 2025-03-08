@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,12 @@ public class AvatarController {
 
     @GetMapping("/avatar")
     public ResponseEntity<List<Avatar>> downloadAllAvatars(Integer pageNumber, Integer pageSize) {
-        List<Avatar> avatarList = avatarService.findAvatarInDataBase(pageNumber, pageSize);
+        List<Avatar> avatarList;
+        try {
+            avatarList = avatarService.findAvatarInDataBase(pageNumber, pageSize);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
         if (avatarList == null || avatarList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
