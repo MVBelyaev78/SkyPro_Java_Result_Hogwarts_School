@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
@@ -13,6 +12,9 @@ import ru.hogwarts.school.repository.AvatarRepository;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +31,7 @@ public class AvatarServiceTest {
     public void should_findAvatarInDataBase_succeed() {
         final Avatar avatar1 = new Avatar();
         avatar1.setId(1L);
-        avatar1.setFilePath("file_path");
+        avatar1.setFilePath("file_path/avatar1");
         avatar1.setFileSize(1);
         avatar1.setMediaType("text/plain");
         avatar1.setStudent(new Student(1L,"John Lennon", 20));
@@ -37,13 +39,14 @@ public class AvatarServiceTest {
 
         final Avatar avatar2 = new Avatar();
         avatar2.setId(2L);
-        avatar2.setFilePath("file_path");
+        avatar2.setFilePath("file_path/avatar2");
         avatar2.setFileSize(1);
         avatar2.setMediaType("text/plain");
         avatar2.setStudent(new Student(2L,"George Harrison", 17));
         avatar2.setData(new byte[]{0, 1});
 
-        when(avatarRepositoryMock.findAll()).thenReturn(List.of(avatar1, avatar2));
+        PageRequest pageRequest = PageRequest.of(0, 2);
+        when(avatarRepositoryMock.findAll(pageRequest)).thenReturn(new PageImpl<>(List.of(avatar1, avatar2)));
         assertEquals(List.of(avatar1, avatar2), out.findAvatarInDataBase(1, 2));
     }
 
