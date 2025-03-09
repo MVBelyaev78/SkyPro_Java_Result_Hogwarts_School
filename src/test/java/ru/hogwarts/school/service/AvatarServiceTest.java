@@ -32,7 +32,7 @@ public class AvatarServiceTest {
         final Avatar avatar1 = new Avatar();
         avatar1.setId(1L);
         avatar1.setFilePath("file_path/avatar1");
-        avatar1.setFileSize(1);
+        avatar1.setFileSize(2);
         avatar1.setMediaType("text/plain");
         avatar1.setStudent(new Student(1L,"John Lennon", 20));
         avatar1.setData(new byte[]{0, 1});
@@ -40,7 +40,7 @@ public class AvatarServiceTest {
         final Avatar avatar2 = new Avatar();
         avatar2.setId(2L);
         avatar2.setFilePath("file_path/avatar2");
-        avatar2.setFileSize(1);
+        avatar2.setFileSize(2);
         avatar2.setMediaType("text/plain");
         avatar2.setStudent(new Student(2L,"George Harrison", 17));
         avatar2.setData(new byte[]{0, 1});
@@ -60,7 +60,7 @@ public class AvatarServiceTest {
         final Avatar avatar = new Avatar();
         avatar.setId(1L);
         avatar.setFilePath("file_path");
-        avatar.setFileSize(1);
+        avatar.setFileSize(2);
         avatar.setMediaType("text/plain");
         avatar.setStudent(new Student(1L,"John Lennon", 20));
         avatar.setData(new byte[]{0, 1});
