@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -54,5 +55,17 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> findByNameOrColorContainsIgnoreCase(String stringFilter) {
         logger.info("FacultyService.findByNameOrColorContainsIgnoreCase: stringFilter={}", stringFilter);
         return facultyRepository.findByNameOrColorContainsIgnoreCase(stringFilter);
+    }
+
+    public Optional<List<String>> findLongestFacultyNames() {
+        return facultyRepository
+                .findAll()
+                .stream()
+                .map(Faculty::getName)
+                .collect(Collectors.groupingBy(String::length))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByKey())
+                .map(Map.Entry::getValue);
     }
 }

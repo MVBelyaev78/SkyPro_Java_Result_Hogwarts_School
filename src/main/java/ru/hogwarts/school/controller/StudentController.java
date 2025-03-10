@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("/student")
@@ -114,5 +115,23 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(students);
+    }
+
+    @GetMapping(value = "/first_symbol", params = "firstSymbol")
+    public ResponseEntity<List<String>> findStudentsWithNamesFromSymbol(@RequestParam(name = "firstSymbol") String firstWord) {
+        List<String> studentsNames = studentService.findStudentsWithNamesFromSymbol(firstWord);
+        if (studentsNames == null || studentsNames.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentsNames);
+    }
+
+    @GetMapping(value = "/average_age2")
+    public ResponseEntity<Double> findStudentsAverageAge2() {
+        OptionalDouble result = studentService.findStudentsAverageAge2();
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result.getAsDouble());
     }
 }

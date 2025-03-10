@@ -4,6 +4,7 @@ import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface FacultyService {
     List<Faculty> findAll();
@@ -19,4 +20,6 @@ public interface FacultyService {
     Collection<Faculty> findByColor(String color);
 
     Collection<Faculty> findByNameOrColorContainsIgnoreCase(String stringFilter);
+
+    Optional<List<String>> findLongestFacultyNames();
 }

@@ -1,12 +1,10 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 
 public interface StudentService {
     List<Student> findAll();
@@ -28,4 +26,8 @@ public interface StudentService {
     Double findStudentsAverageAge();
 
     Collection<Student> findLastStudents(Integer num);
+
+    List<String> findStudentsWithNamesFromSymbol(String firstWord);
+
+    OptionalDouble findStudentsAverageAge2();
 }
