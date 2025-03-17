@@ -134,4 +134,16 @@ public class StudentController {
         }
         return ResponseEntity.ok(result.getAsDouble());
     }
+
+    @GetMapping(value = "print-parallel")
+    public ResponseEntity<Void> print_parallel() {
+        studentService.printParallel();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "print-synchronized")
+    public ResponseEntity<Void> print_synchronized() {
+        studentService.printSynchronized();
+        return ResponseEntity.ok().build();
+    }
 }

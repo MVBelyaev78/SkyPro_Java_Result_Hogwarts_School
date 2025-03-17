@@ -93,4 +93,40 @@ public class StudentServiceImpl implements StudentService {
                 .mapToDouble(Student::getAge)
                 .average();
     }
+
+    public void printParallel() {
+        final List<Student> studentList = studentRepository.findAll();
+        doParallelOperation(studentList.get(0));
+        doParallelOperation(studentList.get(1));
+        new Thread(() -> {
+            doParallelOperation(studentList.get(2));
+            doParallelOperation(studentList.get(3));
+        }).start();
+        new Thread(() -> {
+            doParallelOperation(studentList.get(4));
+            doParallelOperation(studentList.get(5));
+        }).start();
+    }
+
+    public void printSynchronized() {
+        final List<Student> studentList = studentRepository.findAll();
+        doSynchronizedOperation(studentList.get(0));
+        doSynchronizedOperation(studentList.get(1));
+        new Thread(() -> {
+            doSynchronizedOperation(studentList.get(2));
+            doSynchronizedOperation(studentList.get(3));
+        }).start();
+        new Thread(() -> {
+            doSynchronizedOperation(studentList.get(4));
+            doSynchronizedOperation(studentList.get(5));
+        }).start();
+    }
+
+    private void doParallelOperation(Student s) {
+        System.out.println(s);
+    }
+
+    private synchronized void doSynchronizedOperation(Student s) {
+        System.out.println(s);
+    }
 }

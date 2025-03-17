@@ -30,4 +30,8 @@ public interface StudentService {
     List<String> findStudentsWithNamesFromSymbol(String firstWord);
 
     OptionalDouble findStudentsAverageAge2();
+
+    void printParallel();
+
+    void printSynchronized();
 }
